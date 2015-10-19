@@ -1,0 +1,9 @@
+*.axf
+*.bin
+*.lst
+*.o
+*.d
+
+.DS_Store
+libcore-thumbv7m
+librustc_bitflags-thumbv7m
