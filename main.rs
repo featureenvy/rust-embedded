@@ -8,6 +8,10 @@
 
 extern crate core;
 
+mod memory;
+
+use memory::{set,clear,read,write};
+
 #[lang="eh_personality"] extern fn eh_personality() {}
 #[lang="stack_exhausted"] extern fn stack_exhausted() {}
 #[lang="panic_fmt"]
@@ -35,52 +39,22 @@ const SYSTICK_STRELOAD_R: *mut u32 = 0xE000E014 as *mut u32;
 const SYSTICK_CURRENT_R: *mut u32 = 0xE000E018 as *mut u32;
 
 
-fn set(pointer: *mut u32, value: u32) {
-  unsafe {
-      let current_value = core::intrinsics::volatile_load(pointer);
-      let next_value = current_value | value;
-      core::intrinsics::volatile_store(pointer, next_value);
-  }
-}
-
-fn unset(pointer: *mut u32, value: u32) {
-  unsafe {
-      let current_value = core::intrinsics::volatile_load(pointer);
-      let next_value = current_value & !value;
-      core::intrinsics::volatile_store(pointer, next_value);
-  }
-}
-
-fn read(pointer: *mut u32, mask: u32) -> u32 {
-  unsafe {
-      let value = core::intrinsics::volatile_load(pointer);
-      return value & mask;
-  }
-}
-
-fn write(pointer: *mut u32, value: u32) {
-  unsafe {
-      core::intrinsics::volatile_store(pointer, value);
-  }
-}
-
-
 fn clock_init() {
     set(SYSCTL_RCC_R, 0x00000800); // enable bypass
-    unset(SYSCTL_RCC_R, 0x00400000); // disable sysdiv
-    unset(SYSCTL_RCC_R, 0x00000001); // enable main OSC
+    clear(SYSCTL_RCC_R, 0x00400000); // disable sysdiv
+    clear(SYSCTL_RCC_R, 0x00000001); // enable main OSC
     while read(SYSCTL_RIS_R, 0x00000100) == 0 {}; // wait for main OSC to start
-    unset(SYSCTL_RCC_R, 0x000007C0); // clear XTAL fields
+    clear(SYSCTL_RCC_R, 0x000007C0); // clear XTAL fields
     set(SYSCTL_RCC_R, 0x00000540); // select 16MHz XTAL
-    unset(SYSCTL_RCC_R, 0x00000030); // select main oscillator
-    unset(SYSCTL_RCC_R, 0x00002000); // power up PLL
+    clear(SYSCTL_RCC_R, 0x00000030); // select main oscillator
+    clear(SYSCTL_RCC_R, 0x00002000); // power up PLL
 
 
-    unset(SYSCTL_RCC_R, 0x07800000); // clear sysdiv
+    clear(SYSCTL_RCC_R, 0x07800000); // clear sysdiv
     set(SYSCTL_RCC_R, 0x01000000); // set div to 4 (50MHz)
     set(SYSCTL_RCC_R, 0x00400000); // enable sysdiv
     while read(SYSCTL_RIS_R, 0x00000040) == 0 {}; // wait for PLL
-    unset(SYSCTL_RCC_R, 0x00000800);
+    clear(SYSCTL_RCC_R, 0x00000800);
     write(SYSCTL_RCC2_R, 0xc1004000);
 
     set(SYSCTL_RCGC2_R, 0x00000020);
