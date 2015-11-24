@@ -8,17 +8,10 @@
 
 extern crate core;
 
+mod runtime;
 mod memory;
 
 use memory::{set,clear,read,write};
-
-#[lang="eh_personality"] extern fn eh_personality() {}
-#[lang="stack_exhausted"] extern fn stack_exhausted() {}
-#[lang="panic_fmt"]
-pub fn panic_fmt(_fmt: &core::fmt::Arguments, _file_line: &(&'static str, usize)) -> !
-{
-    loop { }
-}
 
 const GPIO_PORTF_CR_R: *mut u32 = 0x40025524 as *mut u32;
 const GPIO_PORTF_AMSEL_R: *mut u32 = 0x40025528 as *mut u32;
