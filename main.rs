@@ -6,8 +6,6 @@
 #![feature(lang_items)]
 #![feature(core_intrinsics)]
 
-extern crate core;
-
 mod runtime;
 mod memory;
 mod clock;
