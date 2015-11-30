@@ -9,6 +9,7 @@
 mod runtime;
 mod memory;
 mod clock;
+mod gpio;
 mod led;
 pub mod systick;
 
