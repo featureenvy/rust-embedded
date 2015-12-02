@@ -25,7 +25,7 @@ struct GPIORegister {
 impl GPIORegister {
     fn new(port_name: Port) -> GPIORegister {
         let port = port_name as u32;
-        memory::set(GPIO_RCGC_GPIO_R, 0x20);
+        memory::set_value(GPIO_RCGC_GPIO_R, 0x20);
 
         GPIORegister {
             cr_r: (port + 0x524) as *mut u32,
@@ -51,13 +51,13 @@ impl Pin {
     }
 
     pub fn make_output(&self) {
-        memory::set(self.registers.cr_r,  0x1 << self.pin);
-        memory::clear(self.registers.amsel_r,  0x1 << self.pin);
-        memory::clear(self.registers.pctl_r,  0x1 << self.pin);
-        memory::set(self.registers.dir_r,  0x1 << self.pin);
-        memory::clear(self.registers.afsel_r,  0x1 << self.pin);
-        memory::clear(self.registers.pur_r,  0x1 << self.pin);
-        memory::set(self.registers.den_r,  0x1 << self.pin);
+        memory::set(self.registers.cr_r, self.pin);
+        memory::clear(self.registers.amsel_r, self.pin);
+        memory::clear(self.registers.pctl_r, self.pin);
+        memory::set(self.registers.dir_r, self.pin);
+        memory::clear(self.registers.afsel_r, self.pin);
+        memory::clear(self.registers.pur_r, self.pin);
+        memory::set(self.registers.den_r, self.pin);
     }
 
     pub fn read(&self) -> u32 {
@@ -65,11 +65,11 @@ impl Pin {
     }
 
     pub fn set(&self) {
-        memory::set(self.registers.data_r, 0x1 << self.pin);
+        memory::set(self.registers.data_r, self.pin);
     }
 
     pub fn clear(&self) {
-        memory::clear(self.registers.data_r, 0x1 << self.pin);
+        memory::clear(self.registers.data_r, self.pin);
     }
 
 }
