@@ -3,10 +3,15 @@ use memory;
 const GPIO_RCGC_GPIO_R: *mut u32 = 0x400FE608 as *mut u32;
 
 pub enum Port {
-    PORTF = 0x4002_5000,
+    PortF = 0x4002_5000,
 }
 
-pub struct GPIO {
+pub enum Pins {
+    Pin1 = 1,
+    Pin2 = 2,
+}
+
+struct GPIORegister {
     cr_r: *mut u32,
     amsel_r: *mut u32,
     pctl_r: *mut u32,
@@ -17,12 +22,12 @@ pub struct GPIO {
     data_r: *mut u32,
 }
 
-impl GPIO {
-    pub fn new(port_name: Port) -> GPIO {
+impl GPIORegister {
+    fn new(port_name: Port) -> GPIORegister {
         let port = port_name as u32;
         memory::set(GPIO_RCGC_GPIO_R, 0x20);
 
-        GPIO {
+        GPIORegister {
             cr_r: (port + 0x524) as *mut u32,
             amsel_r: (port + 0x400) as *mut u32,
             pctl_r: (port + 0x52C) as *mut u32,
@@ -33,34 +38,38 @@ impl GPIO {
             data_r: (port + 0x3FC) as *mut u32,
         }
     }
+}
+
+pub struct Pin {
+    registers: GPIORegister,
+    pin: u32,
+}
+
+impl Pin {
+    pub fn new(port: Port, pin: Pins) -> Pin {
+        Pin{registers: GPIORegister::new(port), pin: pin as u32}
+    }
 
     pub fn make_output(&self) {
-        memory::write(self.cr_r, 0x1F);
-        memory::write(self.amsel_r, 0x00);
-        memory::write(self.pctl_r, 0x0);
-        memory::write(self.dir_r, 0x0E);
-        memory::write(self.afsel_r, 0x0);
-        memory::write(self.pur_r, 0x11);
-        memory::write(self.den_r, 0x02);
+        memory::set(self.registers.cr_r,  0x1 << self.pin);
+        memory::clear(self.registers.amsel_r,  0x1 << self.pin);
+        memory::clear(self.registers.pctl_r,  0x1 << self.pin);
+        memory::set(self.registers.dir_r,  0x1 << self.pin);
+        memory::clear(self.registers.afsel_r,  0x1 << self.pin);
+        memory::clear(self.registers.pur_r,  0x1 << self.pin);
+        memory::set(self.registers.den_r,  0x1 << self.pin);
     }
 
-    fn read(&self, mask: u32) -> u32 {
-        memory::read(self.data_r, mask)
+    pub fn read(&self) -> u32 {
+        memory::read(self.registers.data_r, 0x1 << self.pin)
     }
 
-    fn write(&self, value: u32) {
-        memory::write(self.data_r, value);
+    pub fn set(&self) {
+        memory::set(self.registers.data_r, 0x1 << self.pin);
     }
 
-}
+    pub fn clear(&self) {
+        memory::clear(self.registers.data_r, 0x1 << self.pin);
+    }
 
-pub fn read(port_name: Port, mask: u32) -> u32 {
-
-    let port = GPIO::new(port_name);
-    port.read(mask)
-}
-
-pub fn write(port_name: Port, value: u32) {
-    let port = GPIO::new(port_name);
-    port.write(value);
 }

@@ -16,8 +16,16 @@ pub mod systick;
 #[no_mangle]
 pub fn main() {
     clock::init();
-    led::init();
-    systick::init(led::toggle);
+    let led_red = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin1);
 
-    loop {}
+    let led_blue = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin2);
+
+    led_red.on();
+    //led_red.off();
+
+    led_blue.on();
+    //led_blue.off();
+
+   loop {}
+
 }
