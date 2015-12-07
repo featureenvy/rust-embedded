@@ -9,6 +9,8 @@ pub enum Port {
 pub enum Pins {
     Pin1 = 1,
     Pin2 = 2,
+    Pin3 = 3,
+    Pin4 = 4,
 }
 
 struct GPIORegister {
@@ -40,28 +42,38 @@ impl GPIORegister {
     }
 }
 
-pub struct Pin {
+pub struct DigitalPin {
     registers: GPIORegister,
     pin: u32,
 }
 
-impl Pin {
-    pub fn new(port: Port, pin: Pins) -> Pin {
-        Pin{registers: GPIORegister::new(port), pin: pin as u32}
+impl DigitalPin {
+    pub fn new(port: Port, pin: Pins) -> DigitalPin {
+        let registers = GPIORegister::new(port);
+        let pin_value = pin as u32;
+
+        memory::set(registers.cr_r, pin_value);
+        memory::clear(registers.amsel_r, pin_value);
+        memory::clear(registers.pctl_r, pin_value);
+        memory::clear(registers.afsel_r, pin_value);
+        memory::set(registers.den_r, pin_value);
+
+        DigitalPin{registers: registers, pin: pin_value}
     }
 
     pub fn make_output(&self) {
-        memory::set(self.registers.cr_r, self.pin);
-        memory::clear(self.registers.amsel_r, self.pin);
-        memory::clear(self.registers.pctl_r, self.pin);
         memory::set(self.registers.dir_r, self.pin);
-        memory::clear(self.registers.afsel_r, self.pin);
         memory::clear(self.registers.pur_r, self.pin);
-        memory::set(self.registers.den_r, self.pin);
+    }
+
+    pub fn make_input(&self) {
+        memory::clear(self.registers.dir_r, self.pin);
+        memory::set(self.registers.pur_r, self.pin);
+
     }
 
     pub fn read(&self) -> u32 {
-        memory::read(self.registers.data_r, 0x1 << self.pin)
+        memory::read(self.registers.data_r, self.pin)
     }
 
     pub fn set(&self) {

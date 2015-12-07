@@ -1,4 +1,4 @@
-use memory::{set_value,read};
+use memory::{set_value,read_value};
 
 
 const SYSTICK_STCTRL_R: *mut u32 = 0xE000E010 as *mut u32;
@@ -12,7 +12,7 @@ pub fn init(systick_fn: fn()) {
     set_value(SYSTICK_STCTRL_R, 0x00000001); // enable multi-shot
 
     set_value(SYSTICK_STRELOAD_R, 0x00FFFFFF); // 50'000'000
-    read(SYSTICK_CURRENT_R, 0x1); // clear current bit
+    read_value(SYSTICK_CURRENT_R, 0x1); // clear current bit
 
     set_value(SYSTICK_STCTRL_R, 0x00000002); // enable interrupts
 

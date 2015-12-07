@@ -1,12 +1,12 @@
 use gpio;
 
 pub struct Led {
-    pin: gpio::Pin,
+    pin: gpio::DigitalPin,
 }
 
 impl Led {
     pub fn new(port: gpio::Port, pin_num: gpio::Pins) -> Led {
-        let pin = gpio::Pin::new(port, pin_num);
+        let pin = gpio::DigitalPin::new(port, pin_num);
         pin.make_output();
         Led{pin: pin}
     }

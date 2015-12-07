@@ -26,11 +26,16 @@ pub fn clear(pointer: *mut u32, bit: u32) {
     clear_value(pointer, value);
 }
 
-pub fn read(pointer: *mut u32, mask: u32) -> u32 {
-  unsafe {
+pub fn read_value(pointer: *mut u32, mask: u32) -> u32 {
+    unsafe {
       let value = core::intrinsics::volatile_load(pointer);
       return value & mask;
   }
+}
+
+pub fn read(pointer: *mut u32, bit: u32) -> u32 {
+    let mask = 0x1 << bit;
+    return read_value(pointer, mask);
 }
 
 pub fn write(pointer: *mut u32, value: u32) {
