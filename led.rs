@@ -6,8 +6,7 @@ pub struct Led {
 
 impl Led {
     pub fn new(port: gpio::Port, pin_num: gpio::Pins) -> Led {
-        let pin = gpio::DigitalPin::new(port, pin_num);
-        pin.make_output();
+        let pin = gpio::DigitalPin::new_output(port, pin_num);
         Led{pin: pin}
     }
 

@@ -6,8 +6,7 @@ pub struct Switch {
 
 impl Switch {
     pub fn new(port: gpio::Port, pin_num: gpio::Pins) -> Switch {
-        let pin = gpio::DigitalPin::new(port, pin_num);
-        pin.make_input();
+        let pin = gpio::DigitalPin::new_input(port, pin_num);
         Switch{pin: pin}
     }
 

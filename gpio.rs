@@ -48,7 +48,21 @@ pub struct DigitalPin {
 }
 
 impl DigitalPin {
-    pub fn new(port: Port, pin: Pins) -> DigitalPin {
+    pub fn new_input(port: Port, pin: Pins) -> DigitalPin {
+        let digital_pin = DigitalPin::new(port, pin);
+        digital_pin.make_input();
+
+        digital_pin
+    }
+
+    pub fn new_output(port: Port, pin: Pins) -> DigitalPin {
+        let digital_pin = DigitalPin::new(port, pin);
+        digital_pin.make_output();
+
+        digital_pin
+    }
+
+    fn new(port: Port, pin: Pins) -> DigitalPin {
         let registers = GPIORegister::new(port);
         let pin_value = pin as u32;
 
@@ -61,12 +75,12 @@ impl DigitalPin {
         DigitalPin{registers: registers, pin: pin_value}
     }
 
-    pub fn make_output(&self) {
+    fn make_output(&self) {
         memory::set(self.registers.dir_r, self.pin);
         memory::clear(self.registers.pur_r, self.pin);
     }
 
-    pub fn make_input(&self) {
+    fn make_input(&self) {
         memory::clear(self.registers.dir_r, self.pin);
         memory::set(self.registers.pur_r, self.pin);
 
