@@ -8,15 +8,15 @@ const SYSTICK_CURRENT_R: *mut u32 = 0xE000E018 as *mut u32;
 static mut handler: fn() = empty_handler;
 
 pub fn init(systick_fn: fn()) {
-    set_value(SYSTICK_STCTRL_R, 0x00000004); // set clk source to main osc
-    set_value(SYSTICK_STCTRL_R, 0x00000001); // enable multi-shot
-
-    set_value(SYSTICK_STRELOAD_R, 0x00FFFFFF); // 50'000'000
-    read_value(SYSTICK_CURRENT_R, 0x1); // clear current bit
-
-    set_value(SYSTICK_STCTRL_R, 0x00000002); // enable interrupts
-
     unsafe {
+        set_value(SYSTICK_STCTRL_R, 0x00000004); // set clk source to main osc
+        set_value(SYSTICK_STCTRL_R, 0x00000001); // enable multi-shot
+
+        set_value(SYSTICK_STRELOAD_R, 0x00FFFFFF); // 50'000'000
+        read_value(SYSTICK_CURRENT_R, 0x1); // clear current bit
+
+        set_value(SYSTICK_STCTRL_R, 0x00000002); // enable interrupts
+
         handler = systick_fn;
     }
 }

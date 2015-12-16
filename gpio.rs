@@ -27,7 +27,9 @@ struct GPIORegister {
 impl GPIORegister {
     fn new(port_name: Port) -> GPIORegister {
         let port = port_name as u32;
-        memory::set_value(GPIO_RCGC_GPIO_R, 0x20);
+        unsafe {
+            memory::set_value(GPIO_RCGC_GPIO_R, 0x20);
+        }
 
         GPIORegister {
             cr_r: (port + 0x524) as *mut u32,
@@ -66,36 +68,47 @@ impl DigitalPin {
         let registers = GPIORegister::new(port);
         let pin_value = pin as u32;
 
-        memory::set(registers.cr_r, pin_value);
-        memory::clear(registers.amsel_r, pin_value);
-        memory::clear(registers.pctl_r, pin_value);
-        memory::clear(registers.afsel_r, pin_value);
-        memory::set(registers.den_r, pin_value);
+        unsafe {
+            memory::set(registers.cr_r, pin_value);
+            memory::clear(registers.amsel_r, pin_value);
+            memory::clear(registers.pctl_r, pin_value);
+            memory::clear(registers.afsel_r, pin_value);
+            memory::set(registers.den_r, pin_value);
+        }
 
         DigitalPin{registers: registers, pin: pin_value}
     }
 
     fn make_output(&self) {
-        memory::set(self.registers.dir_r, self.pin);
-        memory::clear(self.registers.pur_r, self.pin);
+        unsafe {
+            memory::set(self.registers.dir_r, self.pin);
+            memory::clear(self.registers.pur_r, self.pin);
+        }
     }
 
     fn make_input(&self) {
-        memory::clear(self.registers.dir_r, self.pin);
-        memory::set(self.registers.pur_r, self.pin);
-
+        unsafe {
+            memory::clear(self.registers.dir_r, self.pin);
+            memory::set(self.registers.pur_r, self.pin);
+        }
     }
 
     pub fn read(&self) -> u32 {
-        memory::read(self.registers.data_r, self.pin)
+        unsafe {
+            memory::read(self.registers.data_r, self.pin)
+        }
     }
 
     pub fn set(&self) {
-        memory::set(self.registers.data_r, self.pin);
+        unsafe {
+            memory::set(self.registers.data_r, self.pin);
+        }
     }
 
     pub fn clear(&self) {
-        memory::clear(self.registers.data_r, self.pin);
+        unsafe {
+            memory::clear(self.registers.data_r, self.pin);
+        }
     }
 
 }
