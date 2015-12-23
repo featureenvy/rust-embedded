@@ -27,3 +27,13 @@ pub fn init() {
         read_value(SYSCTL_RCGC2_R, 0x1);
     }
 }
+
+pub fn delay(seconds: u64) {
+    let mut iterations = seconds * 5000;
+    while iterations > 0 {
+        unsafe {
+            read_value(SYSCTL_RIS_R, 0x40); //dummy read so it is not optimized away
+        }
+        iterations = iterations - 1;
+    }
+}

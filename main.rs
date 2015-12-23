@@ -14,25 +14,9 @@ mod led;
 mod switch;
 pub mod systick;
 
+mod labs;
+
 #[no_mangle]
 pub fn main() {
-    clock::init();
-    let led_red = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin1);
-
-    let led_blue = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin2);
-
-    let switch = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin4);
-
-    led_red.on();
-    led_blue.on();
-
-    loop {
-        if switch.on() {
-            led_red.off();
-            led_blue.on();
-        } else {
-            led_red.on();
-            led_blue.off();
-        }
-    }
+    labs::lab1::run();
 }

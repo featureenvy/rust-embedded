@@ -1,5 +1,5 @@
 use memory;
-use gpio::{Port};
+use super::{Port};
 
 const GPIO_RCGC_GPIO_R: *mut u32 = 0x400FE608 as *mut u32;
 

@@ -1,5 +1,3 @@
-use memory;
-
 pub enum Port {
     PortF = 0x4002_5000,
 }
