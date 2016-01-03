@@ -298,11 +298,16 @@ void empty_def_handler(void){
 }
 void __aeabi_unwind_cpp_pr0(void) {
 
-    for(;;);
+   for(;;);
 }
 
 void __aeabi_unwind_cpp_pr1(void) {
 
+    for(;;);
+}
+
+void __aeabi_uldivmod(void) {
+    
     for(;;);
 }
 

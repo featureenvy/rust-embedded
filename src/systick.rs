@@ -24,7 +24,7 @@ pub fn init(systick_fn: fn()) {
 fn empty_handler() {}
 
 #[no_mangle]
-pub fn systick_handler() {
+pub extern fn systick_handler() {
     unsafe {
         handler();
     }

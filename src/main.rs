@@ -1,10 +1,12 @@
-#![feature(no_std)]
-#![feature(core)]
+#![feature(start)]
 
 #![no_std]
 #![crate_type="staticlib"]
 #![feature(lang_items)]
 #![feature(core_intrinsics)]
+
+//#[cfg(target_os = "none")]
+extern crate rlibc;
 
 mod runtime;
 mod memory;
@@ -14,9 +16,11 @@ mod led;
 mod switch;
 pub mod systick;
 
-mod labs;
+pub mod labs;
 
-#[no_mangle]
-pub fn main() {
+#[start]
+pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
     labs::lab1::run();
+
+    0
 }
