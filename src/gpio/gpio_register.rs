@@ -12,6 +12,7 @@ pub struct GPIORegister {
     pub pur_r: *mut u32,
     pub den_r: *mut u32,
     pub data_r: *mut u32,
+    pub lock_r: *mut u32,
 }
 
 impl GPIORegister {
@@ -30,6 +31,7 @@ impl GPIORegister {
             pur_r: (port + 0x510) as *mut u32,
             den_r: (port + 0x51C) as *mut u32,
             data_r: (port + 0x3FC) as *mut u32,
+            lock_r: (port + 0x520) as *mut u32,
         }
     }
 }

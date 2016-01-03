@@ -27,6 +27,7 @@ impl DigitalPin {
         let pin_value = pin as u32;
 
         unsafe {
+            memory::write(registers.lock_r, 0x4C4F434B);
             memory::set(registers.cr_r, pin_value);
             memory::clear(registers.amsel_r, pin_value);
             memory::clear(registers.pctl_r, pin_value);

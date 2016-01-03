@@ -3,6 +3,7 @@ pub enum Port {
 }
 
 pub enum Pins {
+    Pin0 = 0,
     Pin1 = 1,
     Pin2 = 2,
     Pin3 = 3,
