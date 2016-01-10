@@ -64,6 +64,14 @@ impl DigitalPin {
         }
     }
 
+    pub fn toggle(&self, on: bool) {
+        if on {
+            self.set();
+        } else {
+            self.clear();
+        }
+    }
+
     pub fn clear(&self) {
         unsafe {
             memory::clear(self.registers.data_r, self.pin);

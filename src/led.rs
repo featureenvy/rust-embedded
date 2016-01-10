@@ -19,8 +19,7 @@ impl Led {
     }
 
     pub fn toggle(&self) {
-        // let mut led = self.pin.read();
-        // led = led ^ 0x1;
-        // self.pin.write(led);
+        let led = self.pin.read();
+        self.pin.toggle(led == 0x0);
     }
 }

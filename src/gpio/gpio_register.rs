@@ -19,7 +19,7 @@ impl GPIORegister {
     pub fn new(port_name: Port) -> GPIORegister {
         let port = port_name as u32;
         unsafe {
-            memory::set_value(GPIO_RCGC_GPIO_R, 0x20);
+            memory::set(GPIO_RCGC_GPIO_R, 5);
         }
 
         GPIORegister {

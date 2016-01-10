@@ -13,6 +13,7 @@ mod memory;
 mod clock;
 mod gpio;
 mod led;
+mod uart;
 mod switch;
 pub mod systick;
 
@@ -20,7 +21,8 @@ pub mod labs;
 
 #[start]
 pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
-    labs::lab1::run();
+    //labs::lab1::run();
+    labs::lab2::run();
 
     0
 }

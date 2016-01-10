@@ -1,4 +1,5 @@
 pub enum Port {
+    PortA = 0x4000_4000,
     PortF = 0x4002_5000,
 }
 
@@ -11,6 +12,8 @@ pub enum Pins {
 }
 
 pub use self::digital_pin::DigitalPin;
+pub use self::uart_pins::UartPins;
 
 mod gpio_register;
 mod digital_pin;
+mod uart_pins;
