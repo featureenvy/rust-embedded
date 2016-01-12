@@ -17,6 +17,6 @@ pub fn run() {
         if count > 126 {
             count = 33;
         }
-        clock::delay(1);
+        clock::delay(100);
     }
 }
