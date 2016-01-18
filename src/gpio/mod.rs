@@ -12,8 +12,8 @@ pub enum Pins {
 }
 
 pub use self::digital_pin::DigitalPin;
-pub use self::uart_pins::UartPins;
+pub use self::uart_pin::init_uart;
 
 mod gpio_register;
 mod digital_pin;
-mod uart_pins;
+mod uart_pin;
