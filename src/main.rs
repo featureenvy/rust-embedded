@@ -10,11 +10,8 @@ extern crate rlibc;
 
 mod runtime;
 mod memory;
-mod clock;
-mod gpio;
-mod led;
-mod uart;
-mod switch;
+mod hal;
+mod driver;
 pub mod systick;
 
 pub mod labs;

@@ -1,4 +1,4 @@
-use gpio;
+use hal::gpio;
 
 pub struct Switch {
     pin: gpio::DigitalPin,

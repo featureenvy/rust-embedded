@@ -1,6 +1,6 @@
 use memory;
-use gpio::{Port, Pins};
-use gpio::gpio_register::GPIORegister;
+use super::{Port, Pins};
+use super::gpio_register::GPIORegister;
 
 pub struct DigitalPin {
     registers: GPIORegister,

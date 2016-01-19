@@ -1,7 +1,7 @@
 use super::uart_register::UartRegister;
 use super::Uarts;
-use gpio::{Port, Pins};
-use gpio;
+use hal::gpio::{Port, Pins};
+use hal::gpio;
 use memory;
 
 const GPIO_RCGC1_R: *mut u32 = 0x400F_E104 as *mut u32;

@@ -1,14 +1,13 @@
-use super::Uarts;
-use super::device::Device;
+use hal::uart;
 
 pub struct Uart {
-    device: Device,
+    device: uart::Device,
 }
 
 impl Uart {
-    pub fn new(device: Uarts) -> Uart {
+    pub fn new(device: uart::Uarts) -> Uart {
         Uart {
-            device: Device::new(device)
+            device: uart::Device::new(device)
         }
     }
 

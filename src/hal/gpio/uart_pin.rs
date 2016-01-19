@@ -1,5 +1,5 @@
-use gpio::{Port, Pins};
-use gpio::gpio_register::GPIORegister;
+use super::{Port, Pins};
+use super::gpio_register::GPIORegister;
 use memory;
 
 const GPIO_RCGC_GPIO_R: *mut u32 = 0x400F_E608 as *mut u32;

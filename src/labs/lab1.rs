@@ -1,7 +1,7 @@
-use clock;
-use led;
-use switch;
-use gpio;
+use hal::clock;
+use driver::led;
+use driver::switch;
+use hal::gpio;
 
 pub fn run() {
     clock::init();
