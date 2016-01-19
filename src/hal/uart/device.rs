@@ -43,17 +43,17 @@ impl Device {
 
     }
 
-    pub fn put(&self, value: u32) {
+    pub fn put(&self, value: u8) {
         unsafe {
             while memory::read(self.register.fr_r, 0x5) != 0 {}
-            memory::write(self.register.dr_r, value);
+            memory::write(self.register.dr_r, value as u32);
         }
     }
 
-    pub fn read_char(&self) -> u32 {
+    pub fn read_char(&self) -> u8 {
         unsafe {
             while memory::read(self.register.fr_r, 0x4) != 0 {}
-            memory::read_value(self.register.dr_r, 0xFF)
+            memory::read_value(self.register.dr_r, 0xFF) as u8
         }
     }
 }
