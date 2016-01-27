@@ -57,7 +57,7 @@ impl Uart {
     fn read_u8(&self) -> u8 {
         let value = self.device.read_char();
 
-        if self.replay_output {
+        if self.replay_output && !self.is_new_line(value) {
             self.put_u8(value);
         }
 
@@ -71,6 +71,10 @@ impl Uart {
             self.device.put(13);
             self.device.put(10);
         }
+    }
+
+    fn is_new_line(&self, value: u8) -> bool {
+        value == 10 || value == 13
     }
 
 }

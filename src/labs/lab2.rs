@@ -20,6 +20,8 @@ pub fn run() {
         uart.write_str("\nGive width: ").unwrap();
         let width = uart.read_int();
 
-        write!(uart, "Size of room: {}", length * width).unwrap();
+        write!(uart, "\nSize of room: {}", length * width).unwrap();
+
+        uart.write_str("\n\n").unwrap();
     }
 }
