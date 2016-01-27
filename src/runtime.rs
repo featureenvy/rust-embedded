@@ -7,7 +7,7 @@ extern fn eh_personality() {}
 extern fn stack_exhausted() {}
 
 #[lang="panic_fmt"]
-pub fn panic_fmt(_fmt: &core::fmt::Arguments, _file_line: &(&'static str, usize)) -> !
+pub extern fn panic_fmt(_fmt: &core::fmt::Arguments, _file_line: &(&'static str, usize)) -> !
 {
     loop { }
 }

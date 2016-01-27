@@ -1,8 +1,14 @@
+use core::str;
+use core::str::FromStr;
 use hal::uart;
+
+const BUFFER_SIZE: usize = 3;
 
 pub struct Uart {
     device: uart::Device,
     replay_output: bool,
+    buffer: [u8; BUFFER_SIZE],
+    used_buffer_size: usize,
 }
 
 impl Uart {
@@ -10,47 +16,55 @@ impl Uart {
         Uart {
             device: uart::Device::new(device),
             replay_output: replay_output,
+            buffer: ['\0' as u8; BUFFER_SIZE],
+            used_buffer_size: 0,
         }
     }
 
-    pub fn read(&self) -> [u8; 3] {
-        let mut output = ['\0' as u8; 3];
-        let mut position = 0;
+    pub fn read_int(&mut self) -> i32 {
+        let is_numeric = |c| c >= 48 && c <= 57;
+        self.buffer = ['\0' as u8; BUFFER_SIZE];
+        self.used_buffer_size = 0;
 
-        let mut next_char = self.read_char();
+        self.read(is_numeric);
+        let input_str = self.view_buffer_as_str();
 
-        while next_char != 13 || next_char != 10 {
-            output[position] = next_char;
-            next_char = self.read_char();
+        let result = i32::from_str(input_str).unwrap();
 
-            position = position + 1;
+        result
+    }
 
-            if position == 3 {
-                self.write("Max 3 chars allowed");
+    fn read<F>(&mut self, predicate: F)
+        where F: Fn(u8) -> bool {
+        let mut next_char = self.read_u8();
+
+        while predicate(next_char) {
+            self.buffer[self.used_buffer_size] = next_char;
+            self.used_buffer_size = self.used_buffer_size + 1;
+
+            if self.used_buffer_size == BUFFER_SIZE {
                 break;
             }
-        }
 
-        output
-
-    }
-
-    pub fn write(&self, value: &str) {
-        for byte in value.as_bytes() {
-            self.put_char(*byte);
+            next_char = self.read_u8();
         }
     }
 
-    pub fn read_char(&self) -> u8 {
+    fn view_buffer_as_str(&self) -> &str {
+        str::from_utf8(&self.buffer[0..self.used_buffer_size]).unwrap()
+    }
+
+    fn read_u8(&self) -> u8 {
         let value = self.device.read_char();
+
         if self.replay_output {
-            self.put_char(value);
+            self.put_u8(value);
         }
 
         value
     }
 
-    fn put_char(&self, value: u8) {
+    fn put_u8(&self, value: u8) {
         if value != 10 && value != 13 {
             self.device.put(value);
         } else {
@@ -59,4 +73,14 @@ impl Uart {
         }
     }
 
+}
+
+impl ::core::fmt::Write for Uart {
+    fn write_str(&mut self, s: &str) -> ::core::fmt::Result {
+        for byte in s.bytes() {
+            self.put_u8(byte);
+        }
+
+        Ok(())
+    }
 }

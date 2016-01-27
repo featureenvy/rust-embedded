@@ -4,12 +4,11 @@
 #![crate_type="staticlib"]
 #![feature(lang_items)]
 #![feature(core_intrinsics)]
-#![feature(fixed_size_array)]
 
 //#[cfg(target_os = "none")]
 extern crate rlibc;
 
-mod runtime;
+pub mod runtime;
 mod memory;
 mod hal;
 mod driver;

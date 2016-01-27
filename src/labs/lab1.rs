@@ -13,9 +13,9 @@ pub fn run() {
     let switch_one = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin4);
     let switch_two = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin0);
 
-    led_red.off();
-    led_blue.off();
-    led_green.off();
+    led_red.on();
+    led_blue.on();
+    led_green.on();
 
     loop {
         if switch_one.on() && switch_two.on() {

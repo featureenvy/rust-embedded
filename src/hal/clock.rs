@@ -2,6 +2,7 @@ use memory::{set,set_value,clear,clear_value,read_value};
 
 const SYSCTL_RCC_R: *mut u32 = 0x400FE060 as *mut u32;
 const SYSCTL_RIS_R: *mut u32 = 0x400FE050 as *mut u32;
+const SYSCTL_RCGC2_R: *mut u32 = 0x400FE108 as *mut u32;
 
 pub fn init() {
     unsafe {
@@ -16,6 +17,8 @@ pub fn init() {
         set_value(SYSCTL_RCC_R, 0x04800000); // set div to 0x9 (div 10, 20MHz)
         set(SYSCTL_RCC_R, 22); // enable sysdiv
         while read_value(SYSCTL_RIS_R, 0x00000040) == 0 {}; // wait for PLL
+
+        set_value(SYSCTL_RCGC2_R, 0x00000020); // enable clock on port F
         clear(SYSCTL_RCC_R, 11); // clear bypass and enable PLL
     }
 }
