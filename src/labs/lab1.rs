@@ -18,15 +18,15 @@ pub fn run() {
     led_green.on();
 
     loop {
-        if switch_one.on() && switch_two.on() {
+        if switch_one.is_on() && switch_two.is_on() {
             led_red.off();
             led_blue.on();
             led_green.off();
-        } else if switch_one.on() {
+        } else if switch_one.is_on() {
             led_red.on();
             led_blue.off();
             led_green.off();
-        } else if switch_two.on() {
+        } else if switch_two.is_on() {
             led_red.off();
             led_blue.off();
             led_green.on();

@@ -19,7 +19,8 @@ pub mod labs;
 #[start]
 pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
     //labs::lab1::run();
-    labs::lab2::run();
+    // labs::lab2::run();
+    labs::lab3::run();
 
     0
 }

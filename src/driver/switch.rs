@@ -10,7 +10,19 @@ impl Switch {
         Switch{pin: pin}
     }
 
-    pub fn on(&self) -> bool {
+    pub fn wait_until_on(&self) {
+        while self.is_off() { };
+    }
+
+    pub fn wait_until_off(&self) {
+        while self.is_on() { };
+    }
+
+    pub fn is_on(&self) -> bool {
         self.pin.read() == 0
+    }
+
+    pub fn is_off(&self) -> bool {
+        !self.is_on()
     }
 }
