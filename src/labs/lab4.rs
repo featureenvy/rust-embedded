@@ -1,27 +1,40 @@
-use hal::{clock, gpio};
-use driver::{led, switch};
+use hal::clock;
+use driver::led;
+use driver::switch;
+use hal::gpio;
 
 pub fn run() {
     clock::init();
 
-    let arterial_signal = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin3);
-    let arterial_switch = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin4);
+    let led_red = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin1);
+    let led_blue = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin2);
+    let led_green = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin3);
 
-    let ventrical_signal = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin1);
+    let switch_one = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin4);
+    let switch_two = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin0);
 
-    arterial_signal.on();
+    led_red.on();
+    led_blue.on();
+    led_green.on();
 
     loop {
-        arterial_switch.wait_until_on();
-        arterial_signal.off();
-
-        arterial_switch.wait_until_off();
-        clock::delay(250);
-
-        ventrical_signal.on();
-        clock::delay(250);
-
-        ventrical_signal.off();
-        arterial_signal.on();
+        if switch_one.is_on() && switch_two.is_on() {
+            led_red.off();
+            led_blue.on();
+            led_green.off();
+        } else if switch_one.is_on() {
+            led_red.on();
+            led_blue.off();
+            led_green.off();
+        } else if switch_two.is_on() {
+            led_red.off();
+            led_blue.off();
+            led_green.on();
+        } else {
+            led_red.off();
+            led_blue.off();
+            led_green.off();
+        }
     }
+
 }
