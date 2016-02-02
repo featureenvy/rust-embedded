@@ -1,5 +1,6 @@
 use memory;
 use super::{Port, Pins};
+use super::port_data::PortData;
 use super::gpio_register::GPIORegister;
 
 pub struct DigitalPin {
@@ -23,7 +24,8 @@ impl DigitalPin {
     }
 
     fn new(port: Port, pin: Pins) -> DigitalPin {
-        let registers = GPIORegister::new(port);
+        let port_data = PortData::new(port);
+        let registers = GPIORegister::new(port_data);
         let pin_value = pin as u32;
 
         unsafe {
