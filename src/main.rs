@@ -12,6 +12,7 @@ pub mod runtime;
 mod memory;
 mod hal;
 mod driver;
+mod debug;
 pub mod systick;
 
 pub mod labs;
@@ -21,7 +22,8 @@ pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
     // labs::lab4::run();
     // labs::lab5::run();
     // labs::lab6::run();
-    labs::lab7::run();
+    // labs::lab7::run();
+    labs::lab8::run();
 
     0
 }

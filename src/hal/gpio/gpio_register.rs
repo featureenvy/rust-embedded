@@ -35,6 +35,8 @@ impl GPIORegister {
     fn power_up_port(position: u32) {
         unsafe {
             memory::set(GPIO_RCGC_GPIO_R, position);
+            // dummy read because we have to wait for the clock to stabilize
+            memory::read(GPIO_RCGC_GPIO_R, 0x1);
         }
     }
 }

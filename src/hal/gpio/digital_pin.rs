@@ -37,6 +37,7 @@ impl DigitalPin {
             memory::set(registers.den_r, pin_value);
         }
 
+
         DigitalPin{registers: registers, pin: pin_value}
     }
 
@@ -50,7 +51,8 @@ impl DigitalPin {
     fn make_input(&self) {
         unsafe {
             memory::clear(self.registers.dir_r, self.pin);
-            memory::set(self.registers.pur_r, self.pin);
+            // memory::set(self.registers.pur_r, self.pin);
+            memory::clear(self.registers.pur_r, self.pin);
         }
     }
 

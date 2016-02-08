@@ -1,5 +1,6 @@
 pub enum Port {
     PortA,
+    PortE,
     PortF,
 }
 
