@@ -12,6 +12,11 @@ pub enum Pins {
     Pin4 = 4,
 }
 
+pub enum Logic {
+    Positive,
+    Negative
+}
+
 pub use self::digital_pin::DigitalPin;
 pub use self::uart_pin::init_uart;
 

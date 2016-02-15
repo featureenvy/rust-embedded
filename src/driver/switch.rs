@@ -2,12 +2,16 @@ use hal::gpio;
 
 pub struct Switch {
     pin: gpio::DigitalPin,
+    direction: gpio::Logic,
 }
 
 impl Switch {
-    pub fn new(port: gpio::Port, pin_num: gpio::Pins) -> Switch {
+    pub fn new(port: gpio::Port, pin_num: gpio::Pins, direction: gpio::Logic) -> Switch {
         let pin = gpio::DigitalPin::new_input(port, pin_num);
-        Switch{pin: pin}
+        Switch {
+            pin: pin,
+            direction: direction
+        }
     }
 
     pub fn wait_until_on(&self) {
@@ -19,7 +23,10 @@ impl Switch {
     }
 
     pub fn is_on(&self) -> bool {
-        self.pin.read() == 0
+        match self.direction {
+            gpio::Logic::Positive => self.pin.read() == 0,
+            gpio::Logic::Negative => self.pin.read() != 0,
+        }
     }
 
     pub fn is_off(&self) -> bool {

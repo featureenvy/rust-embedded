@@ -5,7 +5,7 @@ pub fn run() {
     clock::init();
 
     let arterial_signal = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin3);
-    let arterial_switch = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin4);
+    let arterial_switch = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin4, gpio::Logic::Positive);
 
     let ventrical_signal = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin1);
 
