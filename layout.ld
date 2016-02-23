@@ -30,6 +30,8 @@
 * Description:	Linker description file for LM4FXXX microcontrollers.
 */
 
+__aeabi_unwind_cpp_pr0 = abort;
+
 
 /*
 * Memory definition:
