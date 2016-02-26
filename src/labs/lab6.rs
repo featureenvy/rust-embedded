@@ -6,7 +6,7 @@ pub fn run() {
     clock::init();
 
     let led_blue = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin2);
-    let switch_one = switch::Switch::new(gpio::Port::PortF, gpio::Pins::Pin4, gpio::Logic::Positive);
+    let switch_one = switch::Switch::new_internal(switch::InternalSwitch::Switch0);
 
     led_blue.on();
 

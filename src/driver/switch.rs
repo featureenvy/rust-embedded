@@ -5,6 +5,11 @@ pub struct Switch {
     direction: gpio::Logic,
 }
 
+pub enum InternalSwitch {
+    Switch0,
+    Switch1,
+}
+
 impl Switch {
     pub fn new(port: gpio::Port, pin_num: gpio::Pins, direction: gpio::Logic) -> Switch {
         let pin = gpio::DigitalPin::new_input(port, pin_num);
@@ -12,6 +17,17 @@ impl Switch {
             pin: pin,
             direction: direction
         }
+    }
+
+    pub fn new_internal(switch: InternalSwitch) -> Switch {
+        let switch = match switch {
+            InternalSwitch::Switch0 => Switch::new(gpio::Port::PortF, gpio::Pins::Pin4, gpio::Logic::Positive),
+            InternalSwitch::Switch1 => Switch::new(gpio::Port::PortF, gpio::Pins::Pin0, gpio::Logic::Positive),
+        };
+
+        switch.enable_pull_up();
+
+        switch
     }
 
     pub fn enable_pull_up(&self) {
