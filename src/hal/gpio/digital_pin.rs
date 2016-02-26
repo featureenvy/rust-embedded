@@ -56,6 +56,12 @@ impl DigitalPin {
         }
     }
 
+    pub fn enable_pull_up(&self) {
+        unsafe {
+            memory::set(self.registers.pur_r, self.pin);
+        }
+    }
+
     pub fn read(&self) -> u32 {
         unsafe {
             memory::read(self.registers.data_r, self.pin)

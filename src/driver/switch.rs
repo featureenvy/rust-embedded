@@ -14,6 +14,10 @@ impl Switch {
         }
     }
 
+    pub fn enable_pull_up(&self) {
+        self.pin.enable_pull_up();
+    }
+
     pub fn wait_until_on(&self) {
         while self.is_off() { };
     }
