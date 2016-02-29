@@ -24,7 +24,8 @@ pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
     // labs::lab6::run();
     // labs::lab7::run();
     // labs::lab8::run();
-    labs::lab9::run();
+    // labs::lab9::run();
+    labs::lab10::run();
 
     0
 }

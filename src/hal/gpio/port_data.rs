@@ -11,7 +11,12 @@ impl PortData {
         match port {
             Port::PortA => PortData {
                 base_address: 0x4000_4000,
-                position: 0},
+                position: 0
+            },
+            Port::PortB => PortData {
+                base_address: 0x4000_5000,
+                position: 1
+            },
             Port::PortE => PortData {
                 base_address: 0x4002_4000,
                 position: 4

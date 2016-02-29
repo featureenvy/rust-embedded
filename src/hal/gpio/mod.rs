@@ -1,5 +1,6 @@
 pub enum Port {
     PortA,
+    PortB,
     PortE,
     PortF,
 }
@@ -10,6 +11,7 @@ pub enum Pins {
     Pin2 = 2,
     Pin3 = 3,
     Pin4 = 4,
+    Pin5 = 5,
 }
 
 pub enum Logic {
