@@ -3,6 +3,7 @@ use super::port_data::PortData;
 
 const GPIO_RCGC_GPIO_R: *mut u32 = 0x400FE608 as *mut u32;
 
+#[derive(Copy, Clone)]
 pub struct GPIORegister {
     pub cr_r: *mut u32,
     pub amsel_r: *mut u32,

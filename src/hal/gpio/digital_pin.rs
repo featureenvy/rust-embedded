@@ -3,6 +3,7 @@ use super::{Port, Pins};
 use super::port_data::PortData;
 use super::gpio_register::GPIORegister;
 
+#[derive(Copy, Clone)]
 pub struct DigitalPin {
     registers: GPIORegister,
     pin: u32,

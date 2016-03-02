@@ -1,5 +1,6 @@
 use hal::gpio;
 
+#[derive(Copy, Clone)]
 pub struct Led {
     pin: gpio::DigitalPin,
 }
