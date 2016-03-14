@@ -1,10 +1,17 @@
-use hal::clock;
-use core::fmt::Write;
-use driver::{led, uart};
-use hal::gpio;
-use hal::uart::Uarts;
+#![no_std]
+#![feature(lang_items, start)]
 
-pub fn run() {
+extern crate rust_embedded;
+
+use core::fmt::Write;
+
+use rust_embedded::hal::clock;
+use rust_embedded::driver::{led, uart};
+use rust_embedded::hal::gpio;
+use rust_embedded::hal::uart::Uarts;
+
+#[start]
+pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
     clock::init();
 
     let mut uart = uart::Uart::new(Uarts::Uart0, true);
