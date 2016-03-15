@@ -31,7 +31,8 @@
 */
 
 __aeabi_unwind_cpp_pr0 = abort;
-
+__exidx_start          = abort;
+__exidx_end            = abort;
 
 /*
 * Memory definition:
@@ -103,5 +104,4 @@ SECTIONS
 	{
 		_stack_top = .; /* An index to the end of the stack */
 	}>STACK
-	
 }

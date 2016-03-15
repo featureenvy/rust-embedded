@@ -311,7 +311,7 @@ void __aeabi_unwind_cpp_pr1(void) {
 /*     for(;;); */
 /* } */
 
-void abort(void) {
-    for(;;);
-
-}
+//void abort(void) {
+//    for(;;);
+//
+//}

@@ -7,7 +7,7 @@
 //#[cfg(target_os = "none")]
 extern crate rlibc;
 
-mod runtime;
+pub mod runtime;
 mod memory;
 pub mod hal;
 pub mod driver;
