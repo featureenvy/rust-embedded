@@ -1,22 +1,14 @@
-#![no_std]
-#![feature(lang_items, start)]
+use hal::clock;
+use driver::led;
+use driver::switch;
+use hal::gpio;
 
-extern crate rust_embedded;
+use super::signal::Signal;
+use super::pedestrian_signal::PedestrianSignal;
+use super::signaling_state::State;
+use super::signaling_state::ALL_RED_REF;
 
-mod lab10_code;
-
-use rust_embedded::hal::clock;
-use rust_embedded::driver::led;
-use rust_embedded::driver::switch;
-use rust_embedded::hal::gpio;
-
-use lab10_code::signal::Signal;
-use lab10_code::pedestrian_signal::PedestrianSignal;
-use lab10_code::signaling_state::State;
-use lab10_code::signaling_state::ALL_RED_REF;
-
-#[start]
-pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
+pub fn run() {
     clock::init();
 
     let pedestrian_red = led::Led::new(gpio::Port::PortF, gpio::Pins::Pin1);

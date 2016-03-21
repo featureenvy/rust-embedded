@@ -1,4 +1,4 @@
-use rust_embedded::driver::led;
+use driver::led;
 
 use super::PedestrianColors;
 

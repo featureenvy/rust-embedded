@@ -1,3 +1,8 @@
+mod signal;
+mod pedestrian_signal;
+mod signaling_state;
+mod lab10;
+
 pub enum SignalColors {
     Green,
     Yellow,
@@ -10,6 +15,4 @@ pub enum PedestrianColors {
     Off
 }
 
-pub mod signal;
-pub mod pedestrian_signal;
-pub mod signaling_state;
+pub use self::lab10::run;
