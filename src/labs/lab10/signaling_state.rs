@@ -25,7 +25,7 @@ pub struct SignalValues {
 pub trait State {
     fn next(&self, pedestrian: bool, west: bool, north: bool) -> &'static State;
     fn get_signal_values(&self) -> SignalValues;
-    fn wait_duration(&self) -> u64;
+    fn wait_duration(&self) -> u32;
 }
 
 impl State for AllRed {
@@ -46,7 +46,7 @@ impl State for AllRed {
         }
     }
 
-    fn wait_duration(&self) -> u64 {
+    fn wait_duration(&self) -> u32 {
         50
     }
 }
@@ -64,7 +64,7 @@ impl State for GoWest {
         }
     }
 
-    fn wait_duration(&self) -> u64 {
+    fn wait_duration(&self) -> u32 {
         50
     }
 }
@@ -86,7 +86,7 @@ impl State for LastCallWest {
         }
     }
 
-    fn wait_duration(&self) -> u64 {
+    fn wait_duration(&self) -> u32 {
         50
     }
 }
@@ -104,7 +104,7 @@ impl State for GoNorth {
         }
     }
 
-    fn wait_duration(&self) -> u64 {
+    fn wait_duration(&self) -> u32 {
         50
     }
 }
@@ -126,7 +126,7 @@ impl State for LastCallNorth {
         }
     }
 
-    fn wait_duration(&self) -> u64 {
+    fn wait_duration(&self) -> u32 {
         50
     }
 }
@@ -144,7 +144,7 @@ impl State for GoPedestrian {
         }
     }
 
-    fn wait_duration(&self) -> u64 {
+    fn wait_duration(&self) -> u32 {
         50
     }
 }
@@ -166,7 +166,7 @@ impl State for LastCallPedestrian {
         }
     }
 
-    fn wait_duration(&self) -> u64 {
+    fn wait_duration(&self) -> u32 {
         50
     }
 }

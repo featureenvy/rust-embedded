@@ -23,8 +23,8 @@ pub fn init() {
     }
 }
 
-pub fn delay(millis: u64) {
-    let mut iterations = millis * 2000;
+pub fn delay(millis: u32) {
+    let mut iterations: u32 = millis * 2000;
     while iterations > 0 {
         unsafe {
             read_value(SYSCTL_RCC_R, 0x2); //dummy read so it is not optimized away
